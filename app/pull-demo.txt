@@ -1,0 +1,37 @@
+```python
+import os
+import smtplib
+import time
+from email.message import EmailMessage
+
+TARGET_FILE = "index.html"
+RECIPIENT_EMAIL = "abc@gmail.com"
+SENDER_EMAIL = "your_email@gmail.com"
+APP_PASSWORD = "your_app_password"
+
+
+def send_notification():
+    msg = EmailMessage()
+    msg["Subject"] = "index.html was deleted"
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = RECIPIENT_EMAIL
+    msg.set_content("The file index.html was deleted from the current directory.")
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+        smtp.starttls()
+        smtp.login(SENDER_EMAIL, APP_PASSWORD)
+        smtp.send_message(msg)
+
+
+def main():
+    while True:
+        if not os.path.exists(TARGET_FILE):
+            send_notification()
+            print("Notification sent to", RECIPIENT_EMAIL)
+            break
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
+```
