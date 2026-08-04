@@ -1,0 +1,26 @@
+name: First GitHub Actions Demo
+
+# Trigger the workflow manually from the Actions tab.
+on: workflow_dispatch
+
+jobs:
+  # Define the single job for this workflow.
+  understand-the-structure:
+    # Run the job on the latest Ubuntu runner.
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Show that the workflow is actively running.
+      - name: Show workflow status
+        run: echo "The workflow is running."
+
+      # Step 2: Display the runner operating system details.
+      - name: Show runner OS
+        run: uname -a
+
+      # Step 3: Print repository and Git metadata from GitHub context variables.
+      - name: Show repository and commit info
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Git Ref: ${{ github.ref }}"
+          echo "Commit SHA: ${{ github.sha }}"
