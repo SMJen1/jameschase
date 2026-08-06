@@ -1,0 +1,28 @@
+name: AZ-400 Demo Website Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-job:
+    name: Demo website build
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v4
+
+      # Print Hello World
+      - run: echo "Hello World"
+
+      # Print two separate lines
+      - run: |
+          echo "This is line1"
+          echo "This is line2"
+
+      # Print the contents of app/index.html
+      - run: cat app/index.html
+
+      # List all files in the app directory
+      - run: ls app
