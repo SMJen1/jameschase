@@ -1,9 +1,9 @@
 name: AZ-400 Demo Website Workflow
 
-on:
-  # push:
-  #   branches:
-  #     - main
+# on:
+#   # push:
+#   #   branches:
+#   #     - main
 
 jobs:
   build-job:
