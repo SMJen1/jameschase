@@ -1,0 +1,30 @@
+name: QA Deployment Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-qa:
+    name: Validate QA Configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check QA configuration
+        env:
+          QA_PASSWORD: ${{ secrets.AZ400_DEMO_PASSWORD }}
+          QA_ENVIRONMENT: QA
+        run: |
+          echo "Validating $QA_ENVIRONMENT configuration"
+
+          if [ -z "$QA_PASSWORD" ]; then
+            echo "ERROR: Required QA secret is missing"
+            exit 1
+          fi
+
+          echo "SUCCESS: QA configuration validated"
