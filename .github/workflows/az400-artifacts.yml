@@ -1,0 +1,39 @@
+name: AZ-400 Artifact Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-job:
+    name: Build Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create build output
+        run: |
+          mkdir -p output
+          echo "Hello from AZ-400" > output/app.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-package
+          path: output/   
+  test-job:
+    name: Test Application
+    needs: build-job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: application-package
+          path: downloaded/
+
+      - name: Verify artifact
+        run: |
+          echo "Checking downloaded artifact"
+          cat downloaded/app.txt
